@@ -50,3 +50,7 @@ app.*.map.json
 
 # VSCode settings
 .vscode/settings.json
+
+*.g.dart
+*.freezed.dart
+pubspec.lock
