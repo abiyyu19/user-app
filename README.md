@@ -1,16 +1,43 @@
-# userapp
+# course_app
 
-A new Flutter project.
+A Course Application - learn easily by watching course videos and listening to audiobooks.
 
-## Getting Started
+# Install Application on Your Local Device
 
-This project is a starting point for a Flutter application.
+1. **Clone this repository** using the following command in the terminal:
 
-A few resources to get you started if this is your first Flutter project:
+   ```bash
+   git clone https://github.com/abiyyu19/user-app.git
+   ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. **Install all project dependencies** by running:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+   ```bash
+   flutter pub get
+   ```
+
+3. **Generate necessary files** using `build_runner`:
+
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+4. **Run the application** on an emulator or a real device:
+   ```bash
+   flutter run
+   ```
+
+# Note
+
+You can login using these credentials:
+- username: admin
+- password: admin
+
+or
+
+- username: user
+- password: user
+
+Apologies, Unit Tests have not been implemented in this project due to time constraints. Thank you.
+
+
