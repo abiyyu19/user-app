@@ -70,6 +70,7 @@ class _UserList extends StatelessWidget {
     itemCount: users.length,
     itemBuilder: (final BuildContext context, final int index) => ListTile(
       title: Text('${users[index].firstName} ${users[index].lastName}'),
+      subtitle: Text(users[index].email),
       leading: Image.network(users[index].avatar ?? ''),
     ),
     separatorBuilder: (final BuildContext context, final int index) => const Divider(),
