@@ -55,7 +55,7 @@ class MockAuthRepositoryImpl implements AuthRepository {
   Future<Result<void>> logout() => Future.value(Result.ok(null));
 
   @override
-  Future<Result<User?>> getLoggedUserToSecureStorage() => Future.value(Result.ok(null));
+  Future<Result<User?>> getLoggedUserFromSecureStorage() => Future.value(Result.ok(null));
 
   @override
   Future<Result<void>> saveLoggedUserToSecureStorage({required final User user}) =>

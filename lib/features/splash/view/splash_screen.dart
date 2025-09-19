@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _setup() async {
-    final Result<User?> tokenResult = await _authRepository.getLoggedUserToSecureStorage();
+    final Result<User?> tokenResult = await _authRepository.getLoggedUserFromSecureStorage();
 
     if (tokenResult is Error<User?>) {
       await _handleSessionExpired(tokenResult.error);

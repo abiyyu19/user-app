@@ -8,5 +8,5 @@ abstract interface class AuthRepository {
   Future<Result<void>> logout();
 
   Future<Result<void>> saveLoggedUserToSecureStorage({required final User user});
-  Future<Result<User?>> getLoggedUserToSecureStorage();
+  Future<Result<User?>> getLoggedUserFromSecureStorage();
 }
