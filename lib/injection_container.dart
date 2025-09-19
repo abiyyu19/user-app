@@ -32,5 +32,6 @@ void injection() {
     )
     ..registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(localDataSource: getIt<AuthLocalDataSource>()),
-    );
+    )
+    ..registerLazySingleton<UserRepository>(() => MockUserRepositoryImpl());
 }
