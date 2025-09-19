@@ -1,6 +1,6 @@
-# course_app
+# userapp
 
-A Course Application - learn easily by watching course videos and listening to audiobooks.
+A User Application - show list of user
 
 # Install Application on Your Local Device
 
