@@ -8,7 +8,7 @@ part 'user.g.dart';
 sealed class User with _$User {
   @JsonSerializable(explicitToJson: true, includeIfNull: false, fieldRename: FieldRename.snake)
   factory User({
-    required final String id,
+    required final int id, // same as reqres id
     required final String email,
 
     // Will not null for auth user from Local DB
