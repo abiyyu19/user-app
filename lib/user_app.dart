@@ -39,6 +39,8 @@ class UserApp extends StatelessWidget {
         useMaterial3: true,
         inputDecorationTheme: inputDecorationTheme,
         textTheme: textTheme,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
       ),
       debugShowCheckedModeBanner: false,
     );
