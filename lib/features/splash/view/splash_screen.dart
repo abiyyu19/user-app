@@ -41,6 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
       await _handleSessionExpired(Exception('user is null, user has no session'));
       return;
     }
+    log('Welcome Back! ${user.username}', name: 'SplashScreen');
 
     await Future.delayed(const Duration(milliseconds: 2500));
     if (mounted) {
