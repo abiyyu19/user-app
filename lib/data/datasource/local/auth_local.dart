@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:userapp/core/core.dart';
 import 'package:userapp/domain/domain.dart';
-import 'package:uuid/uuid.dart';
 
 abstract interface class AuthLocalDataSource {
   Future<Result<User>> login({required final String username, required final String password});
@@ -17,7 +16,6 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     : _secureStorage = secureStorage;
 
   final FlutterSecureStorage _secureStorage;
-  final _uuid = const Uuid();
 
   @override
   Future<Result<User>> login({
@@ -31,7 +29,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       // For now, use mock data
       return Result.ok(
         User(
-          id: _uuid.v4(),
+          id: DateTime.now().millisecondsSinceEpoch,
           email: '$username@mail.com',
           username: username,
           firstName: username.toCapitalCase(),
