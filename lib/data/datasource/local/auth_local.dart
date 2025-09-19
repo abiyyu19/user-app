@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:userapp/core/core.dart';
+import 'package:userapp/data/data.dart';
 import 'package:userapp/domain/domain.dart';
 
 abstract interface class AuthLocalDataSource {
@@ -12,10 +13,14 @@ abstract interface class AuthLocalDataSource {
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
-  AuthLocalDataSourceImpl({required final FlutterSecureStorage secureStorage})
-    : _secureStorage = secureStorage;
+  AuthLocalDataSourceImpl({
+    required final FlutterSecureStorage secureStorage,
+    required final AppDatabase database,
+  }) : _secureStorage = secureStorage,
+       _database = database;
 
   final FlutterSecureStorage _secureStorage;
+  final AppDatabase _database;
 
   @override
   Future<Result<User>> login({
@@ -25,19 +30,30 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     try {
       // TODO: implement login
       // Validate username and password with Data from Local Data Source
+      final List<LocalUser> users = await _database.allUsers;
 
-      // For now, use mock data
-      return Result.ok(
-        User(
-          id: DateTime.now().millisecondsSinceEpoch,
-          email: '$username@mail.com',
-          username: username,
-          firstName: username.toCapitalCase(),
-          lastName: username.toCapitalCase(),
-          avatar:
-              'https://gravatar.com/avatar/942aeb9be19e8dd7cf22682bb385e4d0?s=400&d=robohash&r=x',
-        ),
-      );
+      for (final user in users) {
+        if (user.username == username && user.password == password) {
+          return Result.ok(
+            User(id: user.id, email: user.email, username: user.username, avatar: user.avatar),
+          );
+        }
+      }
+
+      return Result.error(Exception('User not found'));
+
+      // // For now, use mock data
+      // return Result.ok(
+      //   User(
+      //     id: DateTime.now().millisecondsSinceEpoch,
+      //     email: '$username@mail.com',
+      //     username: username,
+      //     firstName: username.toCapitalCase(),
+      //     lastName: username.toCapitalCase(),
+      //     avatar:
+      //         'https://gravatar.com/avatar/942aeb9be19e8dd7cf22682bb385e4d0?s=400&d=robohash&r=x',
+      //   ),
+      // );
     } catch (e) {
       return Result.error(Exception('Failed to login: $e'));
     }
