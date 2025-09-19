@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userapp/domain/domain.dart';
 import 'package:userapp/features/home/bloc/home_bloc.dart';
 import 'package:userapp/injection_container.dart';
 
@@ -17,34 +18,52 @@ class HomeScreen extends StatelessWidget {
   );
 }
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(final BuildContext context) => const CardScannerScreen();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class CardScannerScreen extends StatefulWidget {
-  const CardScannerScreen({super.key});
-
+class _HomeViewState extends State<HomeView> {
   @override
-  State<CardScannerScreen> createState() => _CardScannerScreenState();
-}
-
-class _CardScannerScreenState extends State<CardScannerScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(final BuildContext context) => const Scaffold(
+  Widget build(final BuildContext context) => Scaffold(
     resizeToAvoidBottomInset: false,
-    body: SafeArea(child: Center(child: Text('Home'))),
+    appBar: AppBar(
+      title: const Text('Home'),
+      centerTitle: true,
+      actions: [
+        IconButton(
+          onPressed: () => context.read<HomeBloc>().add(const HomeEvent.logout()),
+          icon: const Icon(Icons.logout),
+        ),
+        const SizedBox(width: 4),
+      ],
+    ),
+    body: SafeArea(
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (final BuildContext context, final HomeState state) => switch (state.status) {
+          HomeStatus.success => _UserList(users: state.users),
+          HomeStatus.failure => const Center(child: Text('failure')),
+          _ => const Center(child: CircularProgressIndicator()),
+        },
+      ),
+    ),
+  );
+}
+
+class _UserList extends StatelessWidget {
+  const _UserList({required this.users});
+
+  final List<User> users;
+
+  @override
+  Widget build(final BuildContext context) => ListView.separated(
+    itemCount: users.length,
+    itemBuilder: (final BuildContext context, final int index) => ListTile(
+      title: Text('${users[index].firstName} ${users[index].lastName}'),
+      leading: Image.network(users[index].avatar ?? ''),
+    ),
+    separatorBuilder: (final BuildContext context, final int index) => const Divider(),
   );
 }
