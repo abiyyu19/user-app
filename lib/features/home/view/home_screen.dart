@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:userapp/core/core.dart';
 import 'package:userapp/domain/domain.dart';
 import 'package:userapp/features/home/bloc/home_bloc.dart';
 import 'package:userapp/injection_container.dart';
+import 'package:userapp/widgets/widgets.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -44,7 +46,13 @@ class _HomeViewState extends State<HomeView> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (final BuildContext context, final HomeState state) => switch (state.status) {
           HomeStatus.success => _UserList(users: state.users),
-          HomeStatus.failure => const Center(child: Text('failure')),
+          HomeStatus.failure => Center(
+            child: CustomButton.blue(
+              state: ButtonState.enabled,
+              text: 'Retry',
+              onTap: () => context.read<HomeBloc>().add(const HomeEvent.onFetchInitialUsers()),
+            ),
+          ),
           _ => const Center(child: CircularProgressIndicator()),
         },
       ),
