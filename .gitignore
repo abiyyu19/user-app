@@ -54,3 +54,4 @@ app.*.map.json
 *.g.dart
 *.freezed.dart
 pubspec.lock
+lib/core/app_router/app_router.gr.dart
