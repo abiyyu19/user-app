@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:userapp/core/core.dart';
 import 'package:userapp/data/data.dart';
@@ -23,10 +24,13 @@ void injection() {
       ),
     )
     ..registerSingleton<AppRouter>(AppRouter())
-    ..registerLazySingleton<AuthRepository>(() => MockAuthRepositoryImpl());
-
-  // ..registerSingleton<FlutterSecureStorage>(
-  //   const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true)),
-  // )
-  // ..registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSourceImpl(dio: getIt()))
+    ..registerSingleton<FlutterSecureStorage>(
+      const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true)),
+    )
+    ..registerLazySingleton<AuthLocalDataSource>(
+      () => AuthLocalDataSourceImpl(secureStorage: getIt()),
+    )
+    ..registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(localDataSource: getIt<AuthLocalDataSource>()),
+    );
 }
