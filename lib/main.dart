@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:userapp/injection_container.dart';
 import 'package:userapp/user_app.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  injection();
+  await injection();
 
   runApp(const UserApp());
 }
